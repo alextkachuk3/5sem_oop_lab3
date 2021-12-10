@@ -12,7 +12,7 @@ import java.util.List;
 import java.util.Map;
 
 /**
- *
+ * Handling visualization of player moves
  */
 public class Checkers {
     public static final double CHECKER_BORDER_MULTIPLIER = 1.15;

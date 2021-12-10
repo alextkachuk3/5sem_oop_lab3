@@ -14,6 +14,13 @@ import java.util.Random;
  */
 public class AI {
     private static final Random random = new Random();
+
+    /**
+     *
+     * @param checkers
+     * @param botColor color of pieces for move
+     * @return
+     */
     public static Coords chooseChecker(Checkers checkers, PieceColor botColor) {
         Map<Piece, List<Coords>> available = checkers.getAvailableListByColor(botColor);
         Coords res = null;
@@ -26,6 +33,12 @@ public class AI {
         return res;
     }
 
+    /**
+     *
+     * @param checkers Checkers
+     * @param piece piece which will move
+     * @return Return selected move coords
+     */
     public static Coords chooseMove(Checkers checkers, Piece piece) {
         List<Coords> available = checkers.buildAvailable(piece);
         if (available.isEmpty())

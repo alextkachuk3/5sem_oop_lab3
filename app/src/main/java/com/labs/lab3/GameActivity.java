@@ -7,6 +7,9 @@ import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.LinearLayout;
 
+/**
+ *
+ */
 public class GameActivity extends Activity {
     private GameView gameView;
     private LinearLayout gameLayout;

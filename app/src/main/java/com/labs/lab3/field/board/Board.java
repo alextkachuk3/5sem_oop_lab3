@@ -4,6 +4,10 @@ import android.graphics.Canvas;
 
 import com.labs.lab3.field.Coords;
 
+/**
+ * Chess board class
+ * Init board cells and theirs color. Also setting cells status
+ */
 public class Board {
     private final int fieldSize;
     private int cellSize;

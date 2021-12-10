@@ -3,7 +3,9 @@ package com.labs.lab3.field.board;
 import android.graphics.Color;
 import android.graphics.Paint;
 
-
+/**
+ * Board cell class
+ */
 public class Cell {
     private final CellColor cellColor;
     private int colorIdle;

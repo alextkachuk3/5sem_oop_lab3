@@ -4,6 +4,9 @@ import android.view.MotionEvent;
 
 import com.labs.lab3.field.FieldController;
 
+/**
+ * The class that handling user`s touch to the board
+ */
 class OnTouchTask implements Runnable {
     private final MotionEvent event;
     private final FieldController fieldController;
@@ -13,6 +16,9 @@ class OnTouchTask implements Runnable {
         this.fieldController = fieldController;
     }
 
+    /**
+     * Function activating during user touch
+     */
     @Override
     public void run() {
         if (event == null)

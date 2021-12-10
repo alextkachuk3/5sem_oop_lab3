@@ -14,8 +14,13 @@ import java.util.Arrays;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Future;
 
+/**
+ * Chess game view object class
+ * Use in needed XML layout
+ * Stop user moves until AI end his move
+ */
 public class GameView extends View {
-    private final ExecutorService executor = newFixedThreadPool(5);
+    private final ExecutorService executor = newFixedThreadPool(2);
 
     private static final int FIELD_SIZE = 8;
     private final FieldController fieldController;

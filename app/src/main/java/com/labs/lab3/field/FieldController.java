@@ -16,6 +16,9 @@ import com.labs.lab3.field.board.Board;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Class controlling player moves
+ */
 public class FieldController {
     public static final PieceColor playerSide = PieceColor.BLACK;
     private final GameView caller;

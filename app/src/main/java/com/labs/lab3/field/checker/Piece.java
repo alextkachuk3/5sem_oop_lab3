@@ -4,7 +4,8 @@ import android.graphics.Color;
 import android.graphics.Paint;
 
 /**
- *
+ * The class of player and AI pieces.
+ * Paint pieces and check type of piece
  */
 public class Piece {
     private CheckerPieceType state = CheckerPieceType.PAWN;

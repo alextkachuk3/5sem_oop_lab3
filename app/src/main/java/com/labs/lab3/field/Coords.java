@@ -1,5 +1,8 @@
 package com.labs.lab3.field;
 
+/**
+ * Coords class. Using for working with cells on board.
+ */
 public class Coords {
     public final int x;
     public final int y;
