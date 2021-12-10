@@ -230,20 +230,4 @@ public class FieldController {
     private void updateQueens() {
         checkers.updateQueens();
     }
-
-    public void getStatus() {
-        if (checkers.count(PieceColor.BLACK) == 0) {
-            Toast toast = Toast.makeText(this.caller.getContext(), "White won", Toast.LENGTH_LONG);
-            toast.show();
-        }
-        else if (checkers.count(PieceColor.WHITE) == 0) {
-            Toast toast = Toast.makeText(this.caller.getContext(), "Black won", Toast.LENGTH_LONG);
-            toast.show();
-        }
-        if (checkers.isDraw(gameState)) {
-            Toast toast = Toast.makeText(this.caller.getContext(), "Draw", Toast.LENGTH_LONG);
-            toast.show();
-        }
-    }
-
 }

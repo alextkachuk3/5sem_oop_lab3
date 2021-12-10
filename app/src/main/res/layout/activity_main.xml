@@ -3,18 +3,17 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#ABB7EF"
+    android:gravity="center"
     android:orientation="vertical"
-    tools:context=".GameActivity"
-    android:background="#eff2ff"
-    android:gravity="center">
+    tools:context=".GameActivity">
 
     <LinearLayout
-            android:id="@+id/game_layout"
-            android:layout_width="340dp"
-            android:layout_height="340dp"
-            android:orientation="vertical"
-            android:gravity="center">
-    </LinearLayout>
+        android:id="@+id/game_layout"
+        android:layout_width="340dp"
+        android:layout_height="340dp"
+        android:gravity="center"
+        android:orientation="vertical"></LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
