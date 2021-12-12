@@ -178,6 +178,26 @@ public class Checkers {
         }
     }
 
+    public int count(PieceColor color) {
+        int cnt = 0;
+        for (Piece[] row : checkersTable) {
+            for (Piece piece : row) {
+                if (piece != null && piece.getColor() == color)
+                    cnt++;
+            }
+        }
+        return cnt;
+    }
+
+    public boolean isDraw(PieceColor color) {
+        Map<Piece, List<Coords>> available = getAvailableListByColor(color);
+        for (Map.Entry<Piece, List<Coords>> entry : available.entrySet()) {
+            if (!entry.getValue().isEmpty())
+                return false;
+        }
+        return true;
+    }
+
     public List<Coords> buildAvailable(Piece piece) {
         Coords coords = find(piece);
         int x = coords.x;

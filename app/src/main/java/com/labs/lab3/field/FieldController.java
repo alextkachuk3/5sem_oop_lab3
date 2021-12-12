@@ -239,4 +239,14 @@ public class FieldController {
     private void updateQueens() {
         checkers.updateQueens();
     }
+
+    public String getStatus() {
+        if (checkers.count(PieceColor.BLACK) == 0)
+            return "WHITE WON";
+        else if (checkers.count(PieceColor.WHITE) == 0)
+            return "BLACK WON";
+        else if (checkers.isDraw(gameState))
+            return "DRAW";
+        else return null;
+    }
 }

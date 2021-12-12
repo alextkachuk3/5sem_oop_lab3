@@ -25,6 +25,7 @@ public class GameView extends View {
     private static final int FIELD_SIZE = 8;
     private final FieldController fieldController;
     private Future botFuture;
+    private Boolean canceled = false;
 
     public GameView(Context context) {
         super(context);
@@ -63,6 +64,9 @@ public class GameView extends View {
         invalidate();
     }
 
+    public String getStatus() {
+        return fieldController.getStatus();
+    }
 
     @Override
     protected void onDraw(Canvas canvas) {
@@ -72,6 +76,14 @@ public class GameView extends View {
 
     public Future getBotFuture() {
         return botFuture;
+    }
+
+    public void cancel() {
+        canceled = true;
+    }
+
+    public boolean isCancelled() {
+        return canceled;
     }
 
 }
