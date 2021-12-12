@@ -57,6 +57,9 @@ public class Checkers {
         }
     }
 
+    /**
+     * Draw pieces on the table
+     */
     public void draw(Canvas canvas) {
         cellSize = canvas.getWidth() / fieldSize;
         checkerSize = (int) (cellSize * CHECKER_RADIUS_MULTIPLIER);
@@ -64,13 +67,13 @@ public class Checkers {
             for (int j = 0; j < fieldSize; j++) {
                 if ((j + i) % 2 == 1 &&
                         checkersTable[i][j] != null) {
-                    drawChecker(i, j, checkersTable[i][j], canvas);
+                    drawPiece(i, j, checkersTable[i][j], canvas);
                 }
             }
         }
     }
 
-    private void drawChecker(int row, int column, Piece piece, Canvas canvas) {
+    private void drawPiece(int row, int column, Piece piece, Canvas canvas) {
         int cx = column * cellSize + cellSize / 2;
         int cy = row * cellSize + cellSize / 2;
         canvas.drawCircle(cx, cy, (float) (checkerSize * CHECKER_BORDER_MULTIPLIER), queenPaint);
@@ -80,13 +83,19 @@ public class Checkers {
         }
     }
 
-    public Piece getChecker(int x, int y) {
+    /**
+     * Get piece by selected coords
+     * @param x x coord of piece
+     * @param y y coord of piece
+     * @return piece which located by selected coords
+     */
+    public Piece getPiece(int x, int y) {
         if (border(x) && border(y))
             return checkersTable[y][x];
         return null;
     }
 
-    public Piece getChecker(Coords coords) {
+    public Piece getPiece(Coords coords) {
         return checkersTable[coords.y][coords.x];
     }
 
@@ -102,10 +111,22 @@ public class Checkers {
         return null;
     }
 
+    /**
+     * Remove piece from table
+     * @param x x coord of piece
+     * @param y y coord of piece
+     */
     public void remove(int x, int y) {
         checkersTable[y][x] = null;
     }
 
+    /**
+     * Move piece to selected coord
+     * @param piece A piece that will move
+     * @param x x coord of move
+     * @param y y coord of move
+     * @return
+     */
     public boolean move(Piece piece, int x, int y) {
         boolean haveBeaten = false;
         Coords found = find(piece);
@@ -139,16 +160,19 @@ public class Checkers {
         return haveBeaten;
     }
 
+    /**
+     * Transforms pawns in the last row of the opponent into a queen
+     */
     public void updateQueens() {
         queensRow(0, PieceColor.BLACK);
         queensRow(fieldSize - 1, PieceColor.WHITE);
     }
 
-    private void queensRow(int i, PieceColor black) {
+    private void queensRow(int i, PieceColor color) {
         for (Piece piece : checkersTable[i]) {
             if (piece == null)
                 continue;
-            if (piece.getColor() == black) {
+            if (piece.getColor() == color) {
                 piece.setState(CheckerPieceType.QUEEN);
             }
         }
@@ -188,12 +212,12 @@ public class Checkers {
         while (border(x + vx) && border(y + vy)) {
             x = x + vx;
             y = y + vy;
-            Piece other = getChecker(x, y);
+            Piece other = getPiece(x, y);
             if (other != null) {
                 if (other.getColor() == current.getColor())
                     return;
                 if (border(x + vx) && border(y + vy)) {
-                    other = getChecker(x + vx, y + vy);
+                    other = getPiece(x + vx, y + vy);
                     if (other == null) {
                         res.add(new Coords(x + vx, y + vy));
                     }
@@ -209,12 +233,12 @@ public class Checkers {
         while (border(x + vx) && border(y + vy)) {
             x = x + vx;
             y = y + vy;
-            Piece other = getChecker(x, y);
+            Piece other = getPiece(x, y);
             if (other != null) {
                 if (other.getColor() == current.getColor())
                     return;
                 if (border(x + vx) && border(y + vy)) {
-                    other = getChecker(x + vx, y + vy);
+                    other = getPiece(x + vx, y + vy);
                     if (other == null) {
                         res.add(new Coords(x + vx, y + vy));
                     }
@@ -226,13 +250,13 @@ public class Checkers {
 
     private void tryMove(int x, int y, int dx, int dy, Piece current, List<Coords> res) {
         if (border(x, dx) && border(y, dy)) {
-            Piece pieceOther = getChecker(x + dx, y + dy);
+            Piece pieceOther = getPiece(x + dx, y + dy);
             if (pieceOther == null) {
                 res.add(new Coords(x + dx, y + dy));
             } else if (pieceOther.getColor() != current.getColor()
                     && border(x, 2 * dx)
                     && border(y, 2 * dy)) {
-                pieceOther = getChecker(x + 2 * dx, y + 2 * dy);
+                pieceOther = getPiece(x + 2 * dx, y + 2 * dy);
                 if (pieceOther == null) {
                     res.add(new Coords(x + 2 * dx, y + 2 * dy));
                 }
@@ -257,11 +281,11 @@ public class Checkers {
 
     private void tryBeat(int x, int y, int dx, int dy, Piece current, List<Coords> res) {
         if (border(x, dx) && border(y, dy)) {
-            Piece pieceOther = getChecker(x + dx, y + dy);
+            Piece pieceOther = getPiece(x + dx, y + dy);
             if (pieceOther != null && pieceOther.getColor() != current.getColor()
                     && border(x, 2 * dx)
                     && border(y, 2 * dy)) {
-                pieceOther = getChecker(x + 2 * dx, y + 2 * dy);
+                pieceOther = getPiece(x + 2 * dx, y + 2 * dy);
                 if (pieceOther == null) {
                     res.add(new Coords(x + 2 * dx, y + 2 * dy));
                 }
@@ -295,26 +319,4 @@ public class Checkers {
         }
         return res;
     }
-
-    public int count(PieceColor color) {
-        int cnt = 0;
-        for (Piece[] row : checkersTable) {
-            for (Piece piece : row) {
-                if (piece != null && piece.getColor() == color)
-                    cnt++;
-            }
-        }
-        return cnt;
-    }
-
-    public boolean isDraw(PieceColor color) {
-        Map<Piece, List<Coords>> available = getAvailableListByColor(color);
-        for (Map.Entry<Piece, List<Coords>> entry : available.entrySet()) {
-            if (!entry.getValue().isEmpty())
-                return false;
-        }
-        return true;
-    }
-
-
 }

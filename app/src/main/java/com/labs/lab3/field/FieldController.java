@@ -1,7 +1,6 @@
 package com.labs.lab3.field;
 
 import android.graphics.Canvas;
-import android.widget.Toast;
 
 import com.labs.lab3.AI.AI;
 import com.labs.lab3.GameView;
@@ -57,6 +56,13 @@ public class FieldController {
         }
     }
 
+    /**
+     * Function which call after player click
+     * If player clicks on his piece, then the cells available for move will be colored green
+     * If the player clicks on a green cell, then he moves the selected piece to that cell.
+     * @param x x coord
+     * @param y y coord
+     */
     public void activatePlayer(float x, float y) {
         if (gameState == playerSide) {
             Coords tapCoords = Coords.toCoords(x, y, fieldSize, board.getCellSize());
@@ -93,12 +99,15 @@ public class FieldController {
         }
     }
 
+    /**
+     * Function for bot turn
+     */
     public void startBotTurn() {
         boolean botBeatRow;
         Coords checkerCoords = AI.chooseChecker(checkers, other(playerSide));
         if (checkerCoords == null)
             return;
-        Piece pieceBot = checkers.getChecker(checkerCoords);
+        Piece pieceBot = checkers.getPiece(checkerCoords);
         trySelect(checkerCoords);
         callUpdate();
         Coords moveCoords = AI.chooseMove(checkers, pieceBot);
@@ -136,7 +145,7 @@ public class FieldController {
     public boolean canBeatMore(Coords lastPosition) {
         if (lastPosition == null)
             return false;
-        Piece piece = checkers.getChecker(lastPosition);
+        Piece piece = checkers.getPiece(lastPosition);
         List<Coords> beatable = checkers.canBeat(piece);
         return !beatable.isEmpty();
     }
@@ -156,7 +165,7 @@ public class FieldController {
             return;
         unselectAll();
         Cell cell = board.getCell(coords);
-        Piece piece = checkers.getChecker(coords);
+        Piece piece = checkers.getPiece(coords);
 
         if (cell != null && piece != null &&
                 cell.getCellColor() == CellColor.BLACK && piece.getColor().equals(gameState)) {
@@ -172,7 +181,7 @@ public class FieldController {
         if (coords == null)
             return;
         Cell cell = board.getCell(coords);
-        Piece piece = checkers.getChecker(coords);
+        Piece piece = checkers.getPiece(coords);
 
         if (cell != null && piece != null &&
                 cell.getCellColor() == CellColor.BLACK && piece.getColor().equals(gameState)) {
